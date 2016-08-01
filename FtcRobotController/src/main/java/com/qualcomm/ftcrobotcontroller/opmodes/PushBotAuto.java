@@ -225,4 +225,21 @@ public class PushBotAuto extends PushBotTelemetry
      */
     private int v_state = 0;
 
+    public double cmtopulse (double distance_cm){
+        double circumference = 10.16*Math.PI; // Pi*D
+        double wheel_rotations = distance_cm/circumference*1; // wheel rotation = distance/circumference * gear ratio
+        double pulses = wheel_rotations*1440; // Tetrix CPR - counts per revolution
+        return pulses;
+    }
+
+    public double degreestopulse (int degrees){
+        double wheel_base = 23.5*2; // spin turn
+        double wheel_rotations = wheel_base*Math.PI/(10.16*Math.PI);
+
+        double pulses = wheel_rotations*1440; // Tetrix CPR - counts per revolution
+
+        return (pulses*degrees/360.0f);
+    }
+
+
 } // PushBotAuto
