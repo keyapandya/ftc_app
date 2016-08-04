@@ -4,7 +4,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
  * Created by krish_000 on 8/4/2016.
  */
 public class ColorSensorTest extends PushBotTelemetry{
-    
+
     @Override
     public void start ()
 
@@ -73,9 +73,9 @@ public class ColorSensorTest extends PushBotTelemetry{
                 // Start the drive wheel motors at full power.
                 //
 
-                //set_drive_power (0.25f,0.25f);
+                //set_drive_power (0.20f,0.20f);
                 //
-                // Have the motor shafts turned the required amount?
+                // Have the motor wheels turned the required amount?
                 //
                 // If they haven't, then the op-mode remains in this state (i.e this
                 // block will be executed the next time this method is called).

@@ -114,8 +114,8 @@ public class PushBotAuto extends PushBotTelemetry
             //
             // Start the drive wheel motors at full power.
             //
-
-            //set_drive_power (0.25f,0.25f);
+            run_without_drive_encoders();
+            set_drive_power (0.20f,0.20f);
             //
             // Have the motor shafts turned the required amount?
             //
@@ -123,53 +123,9 @@ public class PushBotAuto extends PushBotTelemetry
             // block will be executed the next time this method is called).
             //
 
-            if ((v_sensor_color.red() > v_sensor_color.blue())&&(v_sensor_color.red() > v_sensor_color.green()))
-            {
-
-                cdi.setLED(1, true);
-                cdi.setLED(0, false);
-
-                int red = v_sensor_color.red();
-                int blue = v_sensor_color.blue();
-                int green = v_sensor_color.green();
-
-                telemetry.addData("01", "red " + red + "true");
-                telemetry.addData("02", "blue " + blue);
-                telemetry.addData("03", "green " + green);
-
-                v_state++;
-            }
-
-            else if ((v_sensor_color.blue() > v_sensor_color.red())&&(v_sensor_color.blue() > v_sensor_color.green()))
-            {
-
-                cdi.setLED(0, true);
-                cdi.setLED(1, false);
-
-                int red = v_sensor_color.red();
-                int blue = v_sensor_color.blue();
-                int green = v_sensor_color.green();
-
-                telemetry.addData("01", "red " + red);
-                telemetry.addData("02", "blue " + blue + "true");
-                telemetry.addData("03", "green " + green);
-
-                v_state++;
-            }
-
-            else
-            {
-
-                cdi.setLED(1, true);
-                cdi.setLED(0, true);
-
-                int red = v_sensor_color.red();
-                int blue = v_sensor_color.blue();
-                int green = v_sensor_color.green();
-
-                telemetry.addData("01", "red " + red);
-                telemetry.addData("02", "blue " + blue);
-                telemetry.addData("03", "green " + green);
+            if((v_sensor_color.blue() > v_sensor_color.red())&&(v_sensor_color.blue() > v_sensor_color.green())){
+                reset_drive_encoders ();
+                set_drive_power (0.0f, 0.0f);
                 v_state++;
             }
 
@@ -180,16 +136,19 @@ public class PushBotAuto extends PushBotTelemetry
         case 2:
             if (have_drive_encoders_reset ())
             {
-                v_state= 1;
+                v_state++;
             }
             break;
         //
         // Turn left until the encoders exceed the specified values.
         //
-        /*case 3:
-            run_using_encoders ();
-            set_drive_power (-1.0f, 1.0f);
-            if (have_drive_encoders_reached (2880, 2880))
+        case 3:
+
+            v_sensor_color.enableLed(true);
+
+            run_without_drive_encoders();
+            set_drive_power (-0.2f, -0.2f);
+            if (v_sensor_color.red()>=40)
             {
                 reset_drive_encoders ();
                 set_drive_power (0.0f, 0.0f);
@@ -208,7 +167,7 @@ public class PushBotAuto extends PushBotTelemetry
         //
         // Turn right until the encoders exceed the specified values.
         //
-        case 5:
+        /*case 5:
             run_using_encoders ();
             set_drive_power (1.0f, -1.0f);
             if (have_drive_encoders_reached (2880, 2880))
