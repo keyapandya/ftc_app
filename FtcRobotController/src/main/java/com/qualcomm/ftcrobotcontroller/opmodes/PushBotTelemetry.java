@@ -77,7 +77,7 @@ public class PushBotTelemetry extends PushBotHardware
         //
         // Send telemetry data to the driver station.
         //
-        telemetry.addData
+        /*telemetry.addData
             ( "01"
             , "Left Drive: "
                 + a_left_drive_power ()
@@ -98,7 +98,7 @@ public class PushBotTelemetry extends PushBotHardware
         telemetry.addData
             ( "04"
             , "Hand Position: " + a_hand_position ()
-            );
+            );*/
 
     } // update_telemetry
 
@@ -115,13 +115,13 @@ public class PushBotTelemetry extends PushBotHardware
         //
         // Send telemetry data concerning gamepads to the driver station.
         //
-        telemetry.addData ("05", "GP1 Left: " + -gamepad1.left_stick_y);
+        /*telemetry.addData ("05", "GP1 Left: " + -gamepad1.left_stick_y);
         telemetry.addData ("06", "GP1 Right: " + -gamepad1.right_stick_y);
         telemetry.addData ("07", "GP2 Left: " + -gamepad2.left_stick_y);
         telemetry.addData ("08", "GP2 X: " + gamepad2.x);
         telemetry.addData ("09", "GP2 Y: " + gamepad2.y);
         telemetry.addData ("10", "GP1 LT: " + gamepad1.left_trigger);
-        telemetry.addData ("11", "GP1 RT: " + gamepad1.right_trigger);
+        telemetry.addData ("11", "GP1 RT: " + gamepad1.right_trigger);*/
 
     } // update_gamepad_telemetry
 

@@ -2,9 +2,13 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Hardware;
 import com.qualcomm.robotcore.util.Range;
 
 //------------------------------------------------------------------------------
@@ -119,6 +123,29 @@ public class PushBotHardware extends OpMode
             v_motor_left_arm = null;
         }
 
+        try
+        {
+            v_sensor_color = hardwareMap.colorSensor.get("v_sensor_color");
+        }
+        catch (Exception p_exeception)
+        {
+            m_warning_message ("v_sensor_color");
+            DbgLog.msg (p_exeception.getLocalizedMessage ());
+
+            v_sensor_color = null;
+        }
+
+        try
+        {
+            cdi = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
+        }
+        catch (Exception p_exeception)
+        {
+            m_warning_message ("cdi");
+            DbgLog.msg (p_exeception.getLocalizedMessage ());
+
+            cdi = null;
+        }
         //
         // Connect the servo motors.
         //
@@ -1043,4 +1070,7 @@ public class PushBotHardware extends OpMode
      */
     private Servo v_servo_right_hand;
 
+    protected ColorSensor v_sensor_color;
+
+    protected DeviceInterfaceModule cdi;
 } // PushBotHardware

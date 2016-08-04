@@ -97,22 +97,22 @@ public class MRRGBExample extends LinearOpMode {
     while (opModeIsActive()) {
       // check the status of the x button on either gamepad.
       bCurrState = gamepad1.x || gamepad2.x;
-
-      // check for button state transitions.
-      if (bCurrState == true && bCurrState != bPrevState)  {
-        // button is transitioning to a pressed state.
-
-        // print a debug statement.
-        DbgLog.msg("MY_DEBUG - x button was pressed!");
-
-        // update previous state variable.
-        bPrevState = bCurrState;
-
         // on button press, enable the LED.
         bEnabled = true;
 
         // turn on the LED.
-        sensorRGB.enableLed(bEnabled);
+
+        // check for button state transitions.
+        if (bCurrState == true && bCurrState != bPrevState)  {
+          // button is transitioning to a pressed state.
+
+          // print a debug statement.
+          DbgLog.msg("MY_DEBUG - x button was pressed!");
+
+          // update previous state variable.
+          bPrevState = bCurrState;
+
+          sensorRGB.enableLed(bEnabled);
       } else if (bCurrState == false && bCurrState != bPrevState)  {
         // button is transitioning to a released state.
 

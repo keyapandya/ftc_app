@@ -107,37 +107,72 @@ public class PushBotAuto extends PushBotTelemetry
             // be in this state and NOT the previous or the encoders will not
             // work.  It doesn't need to be in subsequent states.
             //
-            run_using_encoders ();
+            //run_using_encoders ();
+
+            v_sensor_color.enableLed(true);
 
             //
             // Start the drive wheel motors at full power.
             //
-            set_drive_power (1.0f, 1.0f);
 
+            //set_drive_power (0.25f,0.25f);
             //
             // Have the motor shafts turned the required amount?
             //
             // If they haven't, then the op-mode remains in this state (i.e this
             // block will be executed the next time this method is called).
             //
-            if (have_drive_encoders_reached (2880, 2880))
+
+            if ((v_sensor_color.red() > v_sensor_color.blue())&&(v_sensor_color.red() > v_sensor_color.green()))
             {
-                //
-                // Reset the encoders to ensure they are at a known good value.
-                //
-                reset_drive_encoders ();
 
-                //
-                // Stop the motors.
-                //
-                set_drive_power (0.0f, 0.0f);
+                cdi.setLED(1, true);
+                cdi.setLED(0, false);
 
-                //
-                // Transition to the next state when this method is called
-                // again.
-                //
+                int red = v_sensor_color.red();
+                int blue = v_sensor_color.blue();
+                int green = v_sensor_color.green();
+
+                telemetry.addData("01", "red " + red + "true");
+                telemetry.addData("02", "blue " + blue);
+                telemetry.addData("03", "green " + green);
+
                 v_state++;
             }
+
+            else if ((v_sensor_color.blue() > v_sensor_color.red())&&(v_sensor_color.blue() > v_sensor_color.green()))
+            {
+
+                cdi.setLED(0, true);
+                cdi.setLED(1, false);
+
+                int red = v_sensor_color.red();
+                int blue = v_sensor_color.blue();
+                int green = v_sensor_color.green();
+
+                telemetry.addData("01", "red " + red);
+                telemetry.addData("02", "blue " + blue + "true");
+                telemetry.addData("03", "green " + green);
+
+                v_state++;
+            }
+
+            else
+            {
+
+                cdi.setLED(1, true);
+                cdi.setLED(0, true);
+
+                int red = v_sensor_color.red();
+                int blue = v_sensor_color.blue();
+                int green = v_sensor_color.green();
+
+                telemetry.addData("01", "red " + red);
+                telemetry.addData("02", "blue " + blue);
+                telemetry.addData("03", "green " + green);
+                v_state++;
+            }
+
             break;
         //
         // Wait...
@@ -145,13 +180,13 @@ public class PushBotAuto extends PushBotTelemetry
         case 2:
             if (have_drive_encoders_reset ())
             {
-                v_state++;
+                v_state= 1;
             }
             break;
         //
         // Turn left until the encoders exceed the specified values.
         //
-        case 3:
+        /*case 3:
             run_using_encoders ();
             set_drive_power (-1.0f, 1.0f);
             if (have_drive_encoders_reached (2880, 2880))
@@ -196,6 +231,7 @@ public class PushBotAuto extends PushBotTelemetry
         // Perform no action - stay in this case until the OpMode is stopped.
         // This method will still be called regardless of the state machine.
         //
+        */
         default:
             //
             // The autonomous actions have been accomplished (i.e. the state has
@@ -240,6 +276,7 @@ public class PushBotAuto extends PushBotTelemetry
 
         return (pulses*degrees/360.0f);
     }
+
 
 
 } // PushBotAuto
